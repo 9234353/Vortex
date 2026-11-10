@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VORTEX | F1 STEM Racing Team</title>
+<meta name="description" content="VORTEX is a student F1 STEM racing team. Engineered for speed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+  <div class="pre-count"><span id="preNum">0</span>%</div>
+  <div class="pre-line"><span id="preBar"></span></div>
+</div>
+
+<!-- PAGE TRANSITION: an F1 car drives right to left, dragging a chequered flag behind it -->
+<div class="curtain" id="curtain" aria-hidden="true">
+  <div class="flag" id="flag">
+    <svg class="f1car" id="f1car" viewBox="0 0 420 110" aria-hidden="true">
+      <!-- facing left: nose on the left, rear wing on the right -->
+      <rect x="6" y="80" width="92" height="6" rx="3" fill="#fff"/>
+      <rect x="6" y="66" width="4" height="20" fill="#E10600"/>
+      <path d="M24 74 L128 60 L176 44 L238 40 L306 44 L348 58 L356 74 Z" fill="#E10600"/>
+      <path d="M176 44 L238 40 L250 52 L180 56 Z" fill="#0A0A0A" opacity=".35"/>
+      <path d="M214 42 Q236 22 262 40" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      <rect x="226" y="30" width="22" height="12" rx="6" fill="#fff"/>
+      <rect x="338" y="18" width="62" height="7" rx="2" fill="#fff"/>
+      <rect x="344" y="14" width="5" height="40" fill="#E10600"/>
+      <rect x="392" y="14" width="5" height="40" fill="#E10600"/>
+      <rect x="352" y="24" width="6" height="34" fill="#0A0A0A"/>
+      <g class="wheel"><circle cx="98" cy="76" r="24" fill="#0A0A0A" stroke="#fff" stroke-width="2"/><circle cx="98" cy="76" r="9" fill="#fff"/></g>
+      <g class="wheel"><circle cx="312" cy="74" r="28" fill="#0A0A0A" stroke="#fff" stroke-width="2"/><circle cx="312" cy="74" r="10" fill="#fff"/></g>
+    </svg>
+  </div>
+  <div class="cur-label" id="curLabel"><span class="cur-num" id="curNum">01</span><span class="cur-name" id="curName">About</span></div>
+</div>
+
+<div class="progress" id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="blobs" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+
+<!-- Chapter indicator (right side) -->
+<div class="chap-ind" id="chapInd" aria-hidden="true">
+  <span id="chapNow">01</span><i></i><span>07</span>
+</div>
+
+<!-- NAV -->
+<header class="nav glass" id="nav">
+  <a href="#top" class="logo" data-chapter="Home" data-num="00">VORTEX</a>
+  <button class="menu-btn magnetic" id="menuBtn" aria-expanded="false" aria-controls="menu">
+    <span class="mb-txt">Chapters</span>
+    <span class="mb-ico"><i></i><i></i></span>
+  </button>
+</header>
+
+<!-- FULL-SCREEN CHAPTERS MENU -->
+<div class="menu" id="menu" aria-hidden="true">
+  <ol class="menu-list">
+    <li><a href="#about" data-chapter="About" data-num="01"><em>01</em><span>About</span></a></li>
+    <li><a href="#car" data-chapter="The Car" data-num="02"><em>02</em><span>The Car</span></a></li>
+    <li><a href="#engineering" data-chapter="Engineering" data-num="03"><em>03</em><span>Engineering</span></a></li>
+    <li><a href="#team" data-chapter="Team" data-num="04"><em>04</em><span>Team</span></a></li>
+    <li><a href="#results" data-chapter="Results" data-num="05"><em>05</em><span>Results</span></a></li>
+    <li><a href="#sponsors" data-chapter="Sponsors" data-num="06"><em>06</em><span>Sponsors</span></a></li>
+    <li><a href="#contact" data-chapter="Contact" data-num="07"><em>07</em><span>Contact</span></a></li>
+  </ol>
+  <p class="menu-foot">VORTEX · F1 STEM Racing Team</p>
+</div>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero" data-chap="01">
+  <svg class="airflow" id="airflow" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true"></svg>
+  <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+  <div class="hero-in">
+    <p class="eyebrow fade-in">F1 STEM Racing Team</p>
+    <h1 class="mask-title" id="heroTitle" aria-label="VORTEX">VORTEX</h1>
+    <div class="hero-line" id="heroLine"></div>
+    <p class="tagline fade-in">Beyond limits. Engineered for speed.</p>
+    <div class="hero-btns fade-in">
+      <a href="#car" class="btn btn-red magnetic" data-chapter="The Car" data-num="02">See our car</a>
+      <a href="#team" class="btn glass-btn magnetic" data-chapter="Team" data-num="04">Meet the team</a>
+      <a href="#contact" class="btn glass-btn btn-outline-red magnetic" data-chapter="Contact" data-num="07">Contact &amp; sponsor us</a>
+    </div>
+  </div>
+  <div class="race-no" aria-hidden="true">01</div>
+  <div class="scroll-ind"><small>Scroll to explore</small><span></span></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-in" id="marquee">
+    <span>Engineered for speed</span><b>✦</b><span>Design</span><b>✦</b><span>Test</span><b>✦</b><span>Race</span><b>✦</b>
+    <span>Engineered for speed</span><b>✦</b><span>Design</span><b>✦</b><span>Test</span><b>✦</b><span>Race</span><b>✦</b>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="sec" data-chap="01">
+  <p class="label reveal">01 / About</p>
+  <h2 class="big split">We design, build and race miniature F1 cars, where every <em>thousandth of a second</em> is earned in CAD, CFD and the wind tunnel.</h2>
+  <div class="stats">
+    <div class="glass stat reveal"><b data-count="0.9">0</b><small>Target run (s)</small></div>
+    <div class="glass stat reveal"><b data-count="40">0</b><small>Designs tested</small></div>
+    <div class="glass stat reveal"><b data-count="300">0</b><small>Hours of CAD</small></div>
+    <div class="glass stat reveal"><b data-count="6">0</b><small>Team members</small></div>
+  </div>
+</section>
+
+<!-- CAR (pinned) -->
+<section id="car" class="car" data-chap="02">
+  <div class="car-pin">
+    <div class="car-img img-reveal"><img src="images/hero.jpg" alt="2026 Aston Martin Formula One car"></div>
+    <div class="car-info">
+      <p class="label">02 / The Car</p>
+      <h2 class="big">Built around airflow.</h2>
+      <div class="specs">
+        <div class="glass spec active"><small>Weight</small><b>48 g</b></div>
+        <div class="glass spec"><small>Length</small><b>210 mm</b></div>
+        <div class="glass spec"><small>Wheelbase</small><b>120 mm</b></div>
+        <div class="glass spec"><small>Power</small><b>CO₂ 8 g</b></div>
+      </div>
+      <p class="muted">Replace these numbers with your real car specs.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINEERING -->
+<section id="engineering" class="sec eng-head" data-chap="03">
+  <p class="label reveal">03 / Engineering</p>
+  <h2 class="big split">From sketch to start line.</h2>
+  <p class="muted reveal">Keep scrolling. The page slides sideways through the process.</p>
+</section>
+
+<!-- ENGINEERING PROCESS: full-page panels that slide sideways as you scroll down -->
+<section class="hsteps" id="hsteps" data-chap="03">
+  <div class="hpin">
+    <div class="hline"><span id="hLine"></span></div>
+    <div class="htrack" id="hTrack">
+      <article class="hstep">
+        <div class="hstep-txt">
+          <span class="hnum">01</span>
+          <h3>Design in CAD</h3>
+          <p>Every part is modelled and refined digitally before anything is made.</p>
+        </div>
+        <div class="hstep-img"><img src="images/frontwing.jpg" alt="2026 F1 car with aero testing rakes"></div>
+      </article>
+      <article class="hstep">
+        <div class="hstep-txt">
+          <span class="hnum">02</span>
+          <h3>Test the airflow</h3>
+          <p>CFD simulation and wind tunnel runs show where the drag is hiding.</p>
+        </div>
+        <div class="hstep-img"><img src="images/aero.jpg" alt="2026 Alpine F1 car"></div>
+      </article>
+      <article class="hstep">
+        <div class="hstep-txt">
+          <span class="hnum">03</span>
+          <h3>Build and race</h3>
+          <p>Precision manufacturing, then pit-stop-sharp teamwork on race day.</p>
+        </div>
+        <div class="hstep-img"><img src="images/pitstop.jpg" alt="Red Bull F1 car in Las Vegas livery"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY (horizontal scroll, pinned) -->
+<section class="gal" id="gallery" data-chap="03">
+  <div class="gal-pin">
+    <p class="label gal-label">The world of racing</p>
+    <div class="gal-track" id="galTrack">
+      <figure class="gal-item"><img src="images/hero.jpg" alt="2026 Aston Martin F1 car on track"><figcaption>Racing<span>Where it all begins</span></figcaption></figure>
+      <figure class="gal-item"><img src="images/detail.jpg" alt="2026 Aston Martin F1 car, side view"><figcaption>Detail<span>Every surface shapes the air</span></figcaption></figure>
+      <figure class="gal-item"><img src="images/pitstop.jpg" alt="Red Bull F1 car in Las Vegas livery"><figcaption>Livery<span>Speed you can see</span></figcaption></figure>
+      <figure class="gal-item"><img src="images/aero.jpg" alt="2026 Alpine F1 car"><figcaption>Aero<span>Testing what we can’t see</span></figcaption></figure>
+      <figure class="gal-item"><img src="images/grid.jpg" alt="Alpine F1 car at night, Las Vegas"><figcaption>Night race<span>Lights out</span></figcaption></figure>
+      <figure class="gal-item"><img src="images/night.jpg" alt="Sauber F1 car at night, Las Vegas"><figcaption>Full send<span>Every thousandth counts</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="sec" data-chap="04">
+  <p class="label reveal">04 / Team</p>
+  <h2 class="big split">The people behind VORTEX.</h2>
+  <div class="grid team">
+    <article class="glass card reveal"><div class="ph">TM</div><h3>Team Manager</h3><p>Name Surname</p></article>
+    <article class="glass card reveal"><div class="ph">DE</div><h3>Design Engineer</h3><p>Name Surname</p></article>
+    <article class="glass card reveal"><div class="ph">AE</div><h3>Aerodynamics</h3><p>Name Surname</p></article>
+    <article class="glass card reveal"><div class="ph">MF</div><h3>Manufacturing</h3><p>Name Surname</p></article>
+    <article class="glass card reveal"><div class="ph">MK</div><h3>Marketing</h3><p>Name Surname</p></article>
+    <article class="glass card reveal"><div class="ph">FN</div><h3>Finance</h3><p>Name Surname</p></article>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results" class="sec" data-chap="05">
+  <p class="label reveal">05 / Results</p>
+  <h2 class="big split">The road so far.</h2>
+  <div class="timeline">
+    <div class="tl glass reveal"><b>2025</b><p>Team VORTEX formed. First concept sketches.</p></div>
+    <div class="tl glass reveal"><b>2026</b><p>Regional round: add your result here.</p></div>
+    <div class="tl glass reveal"><b>Next</b><p>National finals: add your goal here.</p></div>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section id="sponsors" class="sec" data-chap="06">
+  <p class="label reveal">06 / Sponsors</p>
+  <h2 class="big split">Backed by believers.</h2>
+  <div class="grid logos">
+    <div class="glass logo-t reveal">Your logo</div><div class="glass logo-t reveal">Your logo</div>
+    <div class="glass logo-t reveal">Your logo</div><div class="glass logo-t reveal">Your logo</div>
+  </div>
+  <a href="#contact" class="btn btn-red magnetic reveal" data-chapter="Contact" data-num="07">Become a sponsor</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec" data-chap="07">
+  <p class="label reveal">07 / Contact</p>
+  <h2 class="big split">Let’s talk.</h2>
+  <!-- Replace YOUR_FORM_ID with your Formspree form id (formspree.io) -->
+  <form class="glass form reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <input name="name" placeholder="Name" required>
+    <input name="email" type="email" placeholder="Email" required>
+    <textarea name="message" rows="4" placeholder="Message" required></textarea>
+    <button class="btn btn-red magnetic" type="submit">Send</button>
+  </form>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wordmark">VORTEX</div>
+  <div class="foot-row">
+    <span>© 2026 Team VORTEX</span>
+    <a href="#top" class="btn glass-btn btn-sm magnetic" data-chapter="Home" data-num="00">Back to top ↑</a>
+  </div>
+  <p class="credits">Photos via Wikimedia Commons: 2026 Chinese GP photos (Aston Martin AMR26, Alonso, Stroll, Alpine Colapinto) by Liauzh, CC BY 4.0. 2025 Las Vegas Grand Prix photos by DHSgov, public domain. Replace with your own team photos when you have them.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
