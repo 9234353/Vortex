@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VORTEX | F1 STEM Racing Team</title>
 <meta name="description" content="VORTEX is a student F1 STEM racing team. Engineered for speed.">
+<script>try{var t=localStorage.getItem('vortex-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -18,9 +19,10 @@
   <div class="pre-line"><span id="preBar"></span></div>
 </div>
 
-<!-- PAGE TRANSITION: an F1 car drives right to left, dragging a chequered flag behind it -->
+<!-- PAGE TRANSITION: chequered ribbons, with an F1 car on odd chapters -->
 <div class="curtain" id="curtain" aria-hidden="true">
-  <div class="flag" id="flag">
+  <div class="flag" id="flag"></div>
+  <div class="car-wrap">
     <svg class="f1car" id="f1car" viewBox="0 0 420 110" aria-hidden="true">
       <!-- facing left: nose on the left, rear wing on the right -->
       <rect x="6" y="80" width="92" height="6" rx="3" fill="#fff"/>
@@ -48,16 +50,24 @@
 
 <!-- Chapter indicator (right side) -->
 <div class="chap-ind" id="chapInd" aria-hidden="true">
-  <span id="chapNow">01</span><i></i><span>07</span>
+  <span id="chapNow">01</span><i></i><span>08</span>
 </div>
 
 <!-- NAV -->
 <header class="nav glass" id="nav">
   <a href="#top" class="logo" data-chapter="Home" data-num="00">VORTEX</a>
-  <button class="menu-btn magnetic" id="menuBtn" aria-expanded="false" aria-controls="menu">
-    <span class="mb-txt">Chapters</span>
-    <span class="mb-ico"><i></i><i></i></span>
-  </button>
+  <div class="nav-right">
+    <button class="icon-btn" id="tourBtn" aria-label="Start auto tour" aria-pressed="false" title="Auto tour">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path class="tr-play" d="M8 5v14l11-7z"/><g class="tr-pause"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></g></svg>
+    </button>
+    <button class="icon-btn" id="themeBtn" aria-label="Switch theme" title="Theme">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><g class="th-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g><path class="th-moon" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+    <button class="menu-btn magnetic" id="menuBtn" aria-expanded="false" aria-controls="menu">
+      <span class="mb-txt">Chapters</span>
+      <span class="mb-ico"><i></i><i></i></span>
+    </button>
+  </div>
 </header>
 
 <!-- FULL-SCREEN CHAPTERS MENU -->
@@ -65,11 +75,12 @@
   <ol class="menu-list">
     <li><a href="#about" data-chapter="About" data-num="01"><em>01</em><span>About</span></a></li>
     <li><a href="#car" data-chapter="The Car" data-num="02"><em>02</em><span>The Car</span></a></li>
-    <li><a href="#engineering" data-chapter="Engineering" data-num="03"><em>03</em><span>Engineering</span></a></li>
-    <li><a href="#team" data-chapter="Team" data-num="04"><em>04</em><span>Team</span></a></li>
-    <li><a href="#results" data-chapter="Results" data-num="05"><em>05</em><span>Results</span></a></li>
-    <li><a href="#sponsors" data-chapter="Sponsors" data-num="06"><em>06</em><span>Sponsors</span></a></li>
-    <li><a href="#contact" data-chapter="Contact" data-num="07"><em>07</em><span>Contact</span></a></li>
+    <li><a href="#tunnel-sec" data-chapter="Test Chamber" data-num="03"><em>03</em><span>Test Chamber</span></a></li>
+    <li><a href="#engineering" data-chapter="Engineering" data-num="04"><em>04</em><span>Engineering</span></a></li>
+    <li><a href="#team" data-chapter="Team" data-num="05"><em>05</em><span>Team</span></a></li>
+    <li><a href="#results" data-chapter="Results" data-num="06"><em>06</em><span>Results</span></a></li>
+    <li><a href="#sponsors" data-chapter="Sponsors" data-num="07"><em>07</em><span>Sponsors</span></a></li>
+    <li><a href="#contact" data-chapter="Contact" data-num="08"><em>08</em><span>Contact</span></a></li>
   </ol>
   <p class="menu-foot">VORTEX · F1 STEM Racing Team</p>
 </div>
@@ -77,8 +88,8 @@
 <main id="top">
 
 <!-- HERO -->
-<section class="hero" data-chap="01">
-  <svg class="airflow" id="airflow" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true"></svg>
+<section class="hero" data-chap="01" data-sector="Home">
+  <canvas class="airflow" id="heroFlow" aria-hidden="true"></canvas>
   <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
   <div class="hero-in">
     <p class="eyebrow fade-in">F1 STEM Racing Team</p>
@@ -87,8 +98,8 @@
     <p class="tagline fade-in">Beyond limits. Engineered for speed.</p>
     <div class="hero-btns fade-in">
       <a href="#car" class="btn btn-red magnetic" data-chapter="The Car" data-num="02">See our car</a>
-      <a href="#team" class="btn glass-btn magnetic" data-chapter="Team" data-num="04">Meet the team</a>
-      <a href="#contact" class="btn glass-btn btn-outline-red magnetic" data-chapter="Contact" data-num="07">Contact &amp; sponsor us</a>
+      <a href="#team" class="btn glass-btn magnetic" data-chapter="Team" data-num="05">Meet the team</a>
+      <a href="#contact" class="btn glass-btn btn-outline-red magnetic" data-chapter="Contact" data-num="08">Contact &amp; sponsor us</a>
     </div>
   </div>
   <div class="race-no" aria-hidden="true">01</div>
@@ -108,17 +119,25 @@
   <p class="label reveal">01 / About</p>
   <h2 class="big split">We design, build and race miniature F1 cars, where every <em>thousandth of a second</em> is earned in CAD, CFD and the wind tunnel.</h2>
   <div class="stats">
-    <div class="glass stat reveal"><b data-count="0.9">0</b><small>Target run (s)</small></div>
-    <div class="glass stat reveal"><b data-count="40">0</b><small>Designs tested</small></div>
-    <div class="glass stat reveal"><b data-count="300">0</b><small>Hours of CAD</small></div>
-    <div class="glass stat reveal"><b data-count="6">0</b><small>Team members</small></div>
+    <div class="glass stat tilt reveal"><b data-count="0.9">0</b><small>Target run (s)</small></div>
+    <div class="glass stat tilt reveal"><b data-count="40">0</b><small>Designs tested</small></div>
+    <div class="glass stat tilt reveal"><b data-count="300">0</b><small>Hours of CAD</small></div>
+    <div class="glass stat tilt reveal"><b data-count="6">0</b><small>Team members</small></div>
   </div>
 </section>
 
 <!-- CAR (pinned) -->
 <section id="car" class="car" data-chap="02">
   <div class="car-pin">
-    <div class="car-img img-reveal"><img src="images/hero.jpg" alt="2026 Aston Martin Formula One car"></div>
+    <div class="car-stage" id="carStage">
+      <div class="car-img img-reveal"><img src="images/hero.jpg" alt="2026 Aston Martin Formula One car"></div>
+      <!-- Hotspots: edit the text, and move each dot with its --x / --y percentages -->
+      <div class="hotspots">
+        <div class="hotspot" style="--x:16%;--y:66%"><button aria-expanded="false" aria-label="Front wing"></button><div class="tip glass"><b>Front wing</b>Sets up the airflow for the whole car and pushes the nose into the track.</div></div>
+        <div class="hotspot" style="--x:52%;--y:50%"><button aria-expanded="false" aria-label="Sidepod"></button><div class="tip glass"><b>Sidepod</b>Shaped to guide clean air to the rear and keep the wake narrow.</div></div>
+        <div class="hotspot" style="--x:84%;--y:34%"><button aria-expanded="false" aria-label="Rear wing"></button><div class="tip glass"><b>Rear wing</b>Trades a little drag for grip at the rear wheels.</div></div>
+      </div>
+    </div>
     <div class="car-info">
       <p class="label">02 / The Car</p>
       <h2 class="big">Built around airflow.</h2>
@@ -128,20 +147,75 @@
         <div class="glass spec"><small>Wheelbase</small><b>120 mm</b></div>
         <div class="glass spec"><small>Power</small><b>CO₂ 8 g</b></div>
       </div>
-      <p class="muted">Replace these numbers with your real car specs.</p>
+      <p class="muted">Replace these numbers with your real car specs. Hover the red dots on the car.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEST CHAMBER: interactive wind tunnel -->
+<section id="tunnel-sec" class="sec" data-chap="03">
+  <p class="label reveal">03 / Test Chamber</p>
+  <h2 class="big split">Put our car in the wind.</h2>
+  <p class="muted reveal">Drag the car up or down, move your cursor through the smoke, and play with the sliders. The numbers are illustrative, not measured.</p>
+
+  <div class="tunnel glass reveal" id="tunnel">
+    <canvas id="tunnelCanvas" aria-hidden="true"></canvas>
+    <svg class="fan fan-l" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27" fill="none" stroke="currentColor" stroke-opacity=".3"/><path d="M30 30 L30 5 A25 25 0 0 1 48 14 Z M30 30 L55 30 A25 25 0 0 1 46 46 Z M30 30 L30 55 A25 25 0 0 1 12 46 Z M30 30 L5 30 A25 25 0 0 1 14 14 Z" fill="currentColor" opacity=".7"/><circle cx="30" cy="30" r="4" fill="#E10600"/></svg>
+    <svg class="fan fan-r" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27" fill="none" stroke="currentColor" stroke-opacity=".3"/><path d="M30 30 L30 5 A25 25 0 0 1 48 14 Z M30 30 L55 30 A25 25 0 0 1 46 46 Z M30 30 L30 55 A25 25 0 0 1 12 46 Z M30 30 L5 30 A25 25 0 0 1 14 14 Z" fill="currentColor" opacity=".7"/><circle cx="30" cy="30" r="4" fill="#E10600"/></svg>
+    <!-- The car in the tunnel. Wings rotate with the wing-angle slider. -->
+    <svg class="tcar" id="tcar" viewBox="0 0 420 110" role="img" aria-label="Car in the wind tunnel. Drag up or down to change ride height.">
+      <rect id="tFront" x="6" y="80" width="92" height="6" rx="3" fill="#fff"/>
+      <rect x="6" y="66" width="4" height="20" fill="#E10600"/>
+      <path d="M24 74 L128 60 L176 44 L238 40 L306 44 L348 58 L356 74 Z" fill="#E10600"/>
+      <path d="M176 44 L238 40 L250 52 L180 56 Z" fill="#0A0A0A" opacity=".35"/>
+      <path d="M214 42 Q236 22 262 40" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      <rect x="226" y="30" width="22" height="12" rx="6" fill="#fff"/>
+      <rect id="tRear" x="338" y="18" width="62" height="7" rx="2" fill="#fff"/>
+      <rect x="344" y="14" width="5" height="40" fill="#E10600"/>
+      <rect x="392" y="14" width="5" height="40" fill="#E10600"/>
+      <rect x="352" y="24" width="6" height="34" fill="#0A0A0A"/>
+      <g><circle cx="98" cy="76" r="24" fill="#0A0A0A" stroke="#fff" stroke-width="2"/><circle cx="98" cy="76" r="9" fill="#fff"/></g>
+      <g><circle cx="312" cy="74" r="28" fill="#0A0A0A" stroke="#fff" stroke-width="2"/><circle cx="312" cy="74" r="10" fill="#fff"/></g>
+    </svg>
+    <div class="readouts" aria-live="polite">
+      <div><small>Drag</small><b id="rDrag">0.0</b><i>N</i></div>
+      <div><small>Downforce</small><b id="rDown">0.0</b><i>N</i></div>
+      <div><small>Est. run</small><b id="rRun">0.00</b><i>s</i></div>
+    </div>
+    <p class="thint">Illustrative values · drag the car</p>
+  </div>
+
+  <div class="tctrl">
+    <label class="pill glass"><span>Wind speed</span><input type="range" id="tSpeed" min="30" max="150" value="80" aria-label="Wind speed"><b id="tSpeedV">16 m/s</b></label>
+    <label class="pill glass"><span>Wing angle</span><input type="range" id="tWing" min="0" max="20" value="8" aria-label="Wing angle"><b id="tWingV">8°</b></label>
+    <div class="pill glass seg" role="group" aria-label="Flow view">
+      <button type="button" class="on" data-view="smoke">Smoke</button><button type="button" data-view="particles">Particles</button><button type="button" data-view="pressure">Pressure</button>
+    </div>
+  </div>
+
+  <!-- SPEC EXPLORER -->
+  <div class="speclab glass tilt reveal">
+    <p class="label">Spec explorer</p>
+    <label class="slider"><span>Car weight</span><input type="range" id="sWeight" min="45" max="70" value="48" aria-label="Car weight"><b id="sWeightV">48 g</b></label>
+    <label class="slider"><span>Wheelbase</span><input type="range" id="sBase" min="100" max="160" value="120" aria-label="Wheelbase"><b id="sBaseV">120 mm</b></label>
+    <div class="spec-out">
+      <small>Estimated run time</small>
+      <b><span id="sRun">1.02</span> s</b>
+      <div class="spec-bar"><span id="sBar"></span></div>
+      <p class="muted">Illustrative only. A lighter car and a wheelbase near 128 mm give the quickest estimate here.</p>
     </div>
   </div>
 </section>
 
 <!-- ENGINEERING -->
-<section id="engineering" class="sec eng-head" data-chap="03">
-  <p class="label reveal">03 / Engineering</p>
+<section id="engineering" class="sec eng-head" data-chap="04">
+  <p class="label reveal">04 / Engineering</p>
   <h2 class="big split">From sketch to start line.</h2>
   <p class="muted reveal">Keep scrolling. The page slides sideways through the process.</p>
 </section>
 
 <!-- ENGINEERING PROCESS: full-page panels that slide sideways as you scroll down -->
-<section class="hsteps" id="hsteps" data-chap="03">
+<section class="hsteps" id="hsteps" data-chap="04">
   <div class="hpin">
     <div class="hline"><span id="hLine"></span></div>
     <div class="htrack" id="hTrack">
@@ -174,7 +248,7 @@
 </section>
 
 <!-- GALLERY (horizontal scroll, pinned) -->
-<section class="gal" id="gallery" data-chap="03">
+<section class="gal" id="gallery" data-chap="04">
   <div class="gal-pin">
     <p class="label gal-label">The world of racing</p>
     <div class="gal-track" id="galTrack">
@@ -188,53 +262,78 @@
   </div>
 </section>
 
-<!-- TEAM -->
-<section id="team" class="sec" data-chap="04">
-  <p class="label reveal">04 / Team</p>
+<!-- TEAM: click or press Enter on a card to expand it -->
+<section id="team" class="sec" data-chap="05">
+  <p class="label reveal">05 / Team</p>
   <h2 class="big split">The people behind VORTEX.</h2>
+  <p class="muted reveal">Tap a card to meet them.</p>
   <div class="grid team">
-    <article class="glass card reveal"><div class="ph">TM</div><h3>Team Manager</h3><p>Name Surname</p></article>
-    <article class="glass card reveal"><div class="ph">DE</div><h3>Design Engineer</h3><p>Name Surname</p></article>
-    <article class="glass card reveal"><div class="ph">AE</div><h3>Aerodynamics</h3><p>Name Surname</p></article>
-    <article class="glass card reveal"><div class="ph">MF</div><h3>Manufacturing</h3><p>Name Surname</p></article>
-    <article class="glass card reveal"><div class="ph">MK</div><h3>Marketing</h3><p>Name Surname</p></article>
-    <article class="glass card reveal"><div class="ph">FN</div><h3>Finance</h3><p>Name Surname</p></article>
+    <article class="glass card member tilt reveal" tabindex="0" role="button" aria-expanded="false">
+      <div class="ph">TM</div><h3>Team Manager</h3><p>Name Surname</p>
+      <div class="more"><small>Skills</small><p>Planning · Budget · Pitching</p><small>Fun fact</small><p>Edit me: a fun fact about this person.</p></div>
+    </article>
+    <article class="glass card member tilt reveal" tabindex="0" role="button" aria-expanded="false">
+      <div class="ph">DE</div><h3>Design Engineer</h3><p>Name Surname</p>
+      <div class="more"><small>Skills</small><p>CAD · Fusion 360 · Tolerances</p><small>Fun fact</small><p>Edit me: a fun fact about this person.</p></div>
+    </article>
+    <article class="glass card member tilt reveal" tabindex="0" role="button" aria-expanded="false">
+      <div class="ph">AE</div><h3>Aerodynamics</h3><p>Name Surname</p>
+      <div class="more"><small>Skills</small><p>CFD · Wind tunnel · Wing design</p><small>Fun fact</small><p>Edit me: a fun fact about this person.</p></div>
+    </article>
+    <article class="glass card member tilt reveal" tabindex="0" role="button" aria-expanded="false">
+      <div class="ph">MF</div><h3>Manufacturing</h3><p>Name Surname</p>
+      <div class="more"><small>Skills</small><p>CNC · 3D printing · Finishing</p><small>Fun fact</small><p>Edit me: a fun fact about this person.</p></div>
+    </article>
+    <article class="glass card member tilt reveal" tabindex="0" role="button" aria-expanded="false">
+      <div class="ph">MK</div><h3>Marketing</h3><p>Name Surname</p>
+      <div class="more"><small>Skills</small><p>Branding · Social · Sponsors</p><small>Fun fact</small><p>Edit me: a fun fact about this person.</p></div>
+    </article>
+    <article class="glass card member tilt reveal" tabindex="0" role="button" aria-expanded="false">
+      <div class="ph">FN</div><h3>Finance</h3><p>Name Surname</p>
+      <div class="more"><small>Skills</small><p>Budgeting · Costing · Reports</p><small>Fun fact</small><p>Edit me: a fun fact about this person.</p></div>
+    </article>
   </div>
 </section>
 
 <!-- RESULTS -->
-<section id="results" class="sec" data-chap="05">
-  <p class="label reveal">05 / Results</p>
+<section id="results" class="sec" data-chap="06">
+  <p class="label reveal">06 / Results</p>
   <h2 class="big split">The road so far.</h2>
   <div class="timeline">
-    <div class="tl glass reveal"><b>2025</b><p>Team VORTEX formed. First concept sketches.</p></div>
-    <div class="tl glass reveal"><b>2026</b><p>Regional round: add your result here.</p></div>
-    <div class="tl glass reveal"><b>Next</b><p>National finals: add your goal here.</p></div>
+    <div class="tl glass tilt reveal"><b>2025</b><p>Team VORTEX formed. First concept sketches.</p></div>
+    <div class="tl glass tilt reveal"><b>2026</b><p>Regional round: add your result here.</p></div>
+    <div class="tl glass tilt reveal"><b>Next</b><p>National finals: add your goal here.</p></div>
+  </div>
+  <!-- Chart data: "name:seconds" pairs separated by commas. Edit freely. -->
+  <div class="chart glass reveal" id="chart" data-designs="Design 1:1.32, Design 2:1.21, Design 3:1.14, Design 4:1.09, Design 5:1.05, Design 6:1.02" data-target="0.95">
+    <p class="label">Run time by design · hover a point</p>
   </div>
 </section>
 
 <!-- SPONSORS -->
-<section id="sponsors" class="sec" data-chap="06">
-  <p class="label reveal">06 / Sponsors</p>
+<section id="sponsors" class="sec" data-chap="07">
+  <p class="label reveal">07 / Sponsors</p>
   <h2 class="big split">Backed by believers.</h2>
   <div class="grid logos">
-    <div class="glass logo-t reveal">Your logo</div><div class="glass logo-t reveal">Your logo</div>
-    <div class="glass logo-t reveal">Your logo</div><div class="glass logo-t reveal">Your logo</div>
+    <div class="glass logo-t tilt reveal">Your logo</div><div class="glass logo-t tilt reveal">Your logo</div>
+    <div class="glass logo-t tilt reveal">Your logo</div><div class="glass logo-t tilt reveal">Your logo</div>
   </div>
-  <a href="#contact" class="btn btn-red magnetic reveal" data-chapter="Contact" data-num="07">Become a sponsor</a>
+  <a href="#contact" class="btn btn-red magnetic reveal" data-chapter="Contact" data-num="08">Become a sponsor</a>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="sec" data-chap="07">
-  <p class="label reveal">07 / Contact</p>
+<section id="contact" class="sec" data-chap="08">
+  <p class="label reveal">08 / Contact</p>
   <h2 class="big split">Let’s talk.</h2>
-  <!-- Replace YOUR_FORM_ID with your Formspree form id (formspree.io) -->
-  <form class="glass form reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-    <input name="name" placeholder="Name" required>
-    <input name="email" type="email" placeholder="Email" required>
-    <textarea name="message" rows="4" placeholder="Message" required></textarea>
+  <!-- Messages are delivered by Formspree to the email on the Formspree account (XuZhenhao25@gmail.com). -->
+  <form class="glass form reveal" action="https://formspree.io/f/mnpdaake" method="POST">
+    <input type="hidden" name="_subject" value="VORTEX website message">
+    <input name="name" placeholder="Name" required aria-label="Name">
+    <input name="email" type="email" placeholder="Email" required aria-label="Email">
+    <textarea name="message" rows="4" placeholder="Message" required aria-label="Message"></textarea>
     <button class="btn btn-red magnetic" type="submit">Send</button>
   </form>
+  <p class="muted reveal">Or email us directly at <a class="link" href="mailto:XuZhenhao25@gmail.com">XuZhenhao25@gmail.com</a>.</p>
 </section>
 
 </main>
@@ -245,8 +344,18 @@
     <span>© 2026 Team VORTEX</span>
     <a href="#top" class="btn glass-btn btn-sm magnetic" data-chapter="Home" data-num="00">Back to top ↑</a>
   </div>
-  <p class="credits">Photos via Wikimedia Commons: 2026 Chinese GP photos (Aston Martin AMR26, Alonso, Stroll, Alpine Colapinto) by Liauzh, CC BY 4.0. 2025 Las Vegas Grand Prix photos by DHSgov, public domain. Replace with your own team photos when you have them.</p>
+  <p class="credits">Photos via Wikimedia Commons: 2026 Chinese GP photos (Aston Martin AMR26, Alonso, Stroll, Alpine Colapinto) by Liauzh, CC BY 4.0. 2025 Las Vegas Grand Prix photos by DHSgov, public domain. Replace with your own team photos when you have them. Tip: type VORTEX anywhere on the page.</p>
 </footer>
+
+<!-- FIXED UI: telemetry HUD, sticky sponsor button, auto-tour pill -->
+<div class="hud glass" id="hud" aria-hidden="true">
+  <span><small>Sector</small><b id="hudSec">Home</b></span>
+  <span><small>Speed</small><b id="hudSpd">0</b><i>km/h</i></span>
+  <span><small>Gear</small><b id="hudGear">N</b></span>
+  <span><small>Lap</small><b id="hudLap">0</b><i>%</i></span>
+</div>
+<a href="#contact" class="btn btn-red sticky-sponsor magnetic" id="stickySponsor" data-chapter="Contact" data-num="08">Sponsor us</a>
+<div class="tour-pill glass" id="tourPill" aria-live="polite">Auto tour · move to stop</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
